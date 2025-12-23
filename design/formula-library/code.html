@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Engineering Formula Library</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;family=Noto+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#137fec",
+                        "primary-hover": "#116ecf",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#111a22",
+                        "surface-dark": "#1a2632",
+                        "surface-border": "#233648",
+                        "text-secondary": "#92adc9",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"],
+                        "body": ["Noto Sans", "sans-serif"],
+                        "mono": ["ui-monospace", "SFMono-Regular", "Menlo", "Monaco", "Consolas", "Liberation Mono", "Courier New", "monospace"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111a22; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #233648; 
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #344c63; 
+        }
+        
+        .math-font {
+            font-family: "Times New Roman", Times, serif;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white font-display h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="shrink-0 flex items-center justify-between border-b border-solid border-surface-border px-6 py-3 bg-background-dark z-20">
+<div class="flex items-center gap-4 text-white">
+<div class="size-8 flex items-center justify-center bg-primary rounded-lg text-white">
+<span class="material-symbols-outlined text-[20px]">calculate</span>
+</div>
+<h2 class="text-white text-xl font-bold leading-tight tracking-[-0.015em]">Engineering Calc</h2>
+</div>
+<div class="flex items-center gap-8">
+<nav class="hidden md:flex items-center gap-6">
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary text-sm font-bold border-b-2 border-primary py-1" href="#">Library</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">History</a>
+<a class="text-white text-sm font-medium hover:text-primary transition-colors" href="#">Settings</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-text-secondary hover:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="size-8 rounded-full bg-surface-border flex items-center justify-center overflow-hidden border border-surface-border cursor-pointer">
+<img alt="User Profile Avatar" class="w-full h-full object-cover" data-alt="Portrait of a user" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuC7GkMkRbnf7j26cyChgd0I43z-gidb5aWXBZ4f9n2yfdY1GkXDKTftFjnU38DnhqzwHfPrvBLxji68uG_YbAeoz37ZCMidNOzc6AcYfb6ZimNFH3ZQjvLpjq0O3-_dYxgoOpOKUQ4zR44ij2kpaG0ZlaDXLaqGgca_HzfAXdp2ZO0d6PdOanOh5aWu3OEszxBb5qqH_TSL9xhHSXhm-XkmzRQvduU5EcKX_rKpKwfQWd-JoWQkIaVj6w74hLmgEaCKgIN5Z-BA"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<div class="flex flex-1 overflow-hidden">
+<!-- Sidebar: Categories (Left Pane) -->
+<aside class="w-64 bg-background-dark border-r border-surface-border flex flex-col shrink-0 overflow-y-auto hidden md:flex">
+<div class="p-4">
+<h3 class="text-text-secondary text-xs font-bold uppercase tracking-wider mb-4 px-2">Discipline</h3>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-all group">
+<span class="material-symbols-outlined group-hover:text-primary">grid_view</span>
+<span class="text-sm font-medium">All Categories</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-all group">
+<span class="material-symbols-outlined group-hover:text-primary">functions</span>
+<span class="text-sm font-medium">Mathematics</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-border/50 text-white border border-surface-border/50 shadow-sm relative overflow-hidden">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<span class="material-symbols-outlined text-primary">science</span>
+<span class="text-sm font-bold">Physics</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-all group">
+<span class="material-symbols-outlined group-hover:text-primary">biotech</span>
+<span class="text-sm font-medium">Chemistry</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-all group">
+<span class="material-symbols-outlined group-hover:text-primary">bolt</span>
+<span class="text-sm font-medium">Electrical</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-all group">
+<span class="material-symbols-outlined group-hover:text-primary">architecture</span>
+<span class="text-sm font-medium">Civil</span>
+</button>
+</div>
+<div class="mt-8 border-t border-surface-border pt-4">
+<h3 class="text-text-secondary text-xs font-bold uppercase tracking-wider mb-4 px-2">Library</h3>
+<div class="flex flex-col gap-1">
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-all group">
+<span class="material-symbols-outlined group-hover:text-yellow-400">star</span>
+<span class="text-sm font-medium">Favorites</span>
+</button>
+<button class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-text-secondary hover:bg-surface-border hover:text-white transition-all group">
+<span class="material-symbols-outlined">history</span>
+<span class="text-sm font-medium">Recent</span>
+</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- List Pane: Formulas (Middle Pane) -->
+<div class="w-full md:w-80 lg:w-96 bg-surface-dark/30 border-r border-surface-border flex flex-col shrink-0">
+<!-- Search Area -->
+<div class="p-4 border-b border-surface-border bg-background-dark/50 backdrop-blur-sm sticky top-0 z-10">
+<label class="flex flex-col w-full">
+<div class="flex w-full items-center rounded-lg bg-surface-border h-10 px-3 focus-within:ring-2 focus-within:ring-primary/50 transition-all">
+<span class="material-symbols-outlined text-text-secondary text-[20px]">search</span>
+<input class="w-full bg-transparent border-none text-white text-sm placeholder:text-text-secondary focus:ring-0 px-2" placeholder="Search formulas..." value=""/>
+</div>
+</label>
+<div class="flex items-center justify-between mt-3 px-1">
+<span class="text-xs font-medium text-text-secondary">24 Formulas</span>
+<button class="text-xs font-medium text-primary hover:text-white flex items-center gap-1">
+                        Sort by <span class="material-symbols-outlined text-[14px]">sort</span>
+</button>
+</div>
+</div>
+<!-- Scrollable List -->
+<div class="flex-1 overflow-y-auto p-3 flex flex-col gap-2">
+<!-- Item 1 (Active) -->
+<div class="group p-3 rounded-lg bg-surface-border border border-primary/30 shadow-lg cursor-pointer flex flex-col gap-2 relative overflow-hidden transition-all hover:border-primary/60">
+<div class="absolute left-0 top-0 bottom-0 w-1 bg-primary"></div>
+<div class="flex justify-between items-start">
+<h4 class="text-white text-sm font-bold">Newton's Second Law</h4>
+<span class="material-symbols-outlined text-text-secondary text-[16px]">chevron_right</span>
+</div>
+<div class="bg-background-dark/50 rounded p-2 flex justify-center">
+<span class="text-white font-serif italic text-sm">F = m · a</span>
+</div>
+<span class="text-xs text-text-secondary">Dynamics</span>
+</div>
+<!-- Item 2 -->
+<div class="group p-3 rounded-lg hover:bg-surface-border border border-transparent hover:border-surface-border cursor-pointer flex flex-col gap-2 transition-all">
+<div class="flex justify-between items-start">
+<h4 class="text-text-secondary group-hover:text-white text-sm font-medium">Kinetic Energy</h4>
+</div>
+<div class="bg-background-dark/30 group-hover:bg-background-dark/50 rounded p-2 flex justify-center">
+<span class="text-text-secondary group-hover:text-white font-serif italic text-sm">KE = ½ m · v²</span>
+</div>
+<span class="text-xs text-text-secondary/70">Energy &amp; Work</span>
+</div>
+<!-- Item 3 -->
+<div class="group p-3 rounded-lg hover:bg-surface-border border border-transparent hover:border-surface-border cursor-pointer flex flex-col gap-2 transition-all">
+<div class="flex justify-between items-start">
+<h4 class="text-text-secondary group-hover:text-white text-sm font-medium">Gravitational Force</h4>
+</div>
+<div class="bg-background-dark/30 group-hover:bg-background-dark/50 rounded p-2 flex justify-center">
+<span class="text-text-secondary group-hover:text-white font-serif italic text-sm">F = G (m₁m₂)/r²</span>
+</div>
+<span class="text-xs text-text-secondary/70">Gravity</span>
+</div>
+<!-- Item 4 -->
+<div class="group p-3 rounded-lg hover:bg-surface-border border border-transparent hover:border-surface-border cursor-pointer flex flex-col gap-2 transition-all">
+<div class="flex justify-between items-start">
+<h4 class="text-text-secondary group-hover:text-white text-sm font-medium">Hooke's Law</h4>
+</div>
+<div class="bg-background-dark/30 group-hover:bg-background-dark/50 rounded p-2 flex justify-center">
+<span class="text-text-secondary group-hover:text-white font-serif italic text-sm">F = -k · x</span>
+</div>
+<span class="text-xs text-text-secondary/70">Elasticity</span>
+</div>
+<!-- Item 5 -->
+<div class="group p-3 rounded-lg hover:bg-surface-border border border-transparent hover:border-surface-border cursor-pointer flex flex-col gap-2 transition-all">
+<div class="flex justify-between items-start">
+<h4 class="text-text-secondary group-hover:text-white text-sm font-medium">Momentum</h4>
+</div>
+<div class="bg-background-dark/30 group-hover:bg-background-dark/50 rounded p-2 flex justify-center">
+<span class="text-text-secondary group-hover:text-white font-serif italic text-sm">p = m · v</span>
+</div>
+<span class="text-xs text-text-secondary/70">Dynamics</span>
+</div>
+</div>
+</div>
+<!-- Detail Workspace (Right Pane) -->
+<main class="flex-1 bg-background-dark flex flex-col overflow-y-auto relative">
+<!-- Breadcrumbs Header -->
+<div class="flex items-center justify-between p-6 pb-2">
+<div class="flex flex-wrap gap-2 items-center">
+<a class="text-text-secondary text-sm hover:text-white transition-colors" href="#">Library</a>
+<span class="material-symbols-outlined text-text-secondary text-[14px]">chevron_right</span>
+<a class="text-text-secondary text-sm hover:text-white transition-colors" href="#">Physics</a>
+<span class="material-symbols-outlined text-text-secondary text-[14px]">chevron_right</span>
+<span class="text-white text-sm font-medium bg-surface-border px-2 py-0.5 rounded text-xs uppercase tracking-wide">Dynamics</span>
+</div>
+<div class="flex gap-2">
+<button class="size-8 rounded hover:bg-surface-border text-text-secondary hover:text-white flex items-center justify-center transition-colors" title="Add to Favorites">
+<span class="material-symbols-outlined text-[20px]">star</span>
+</button>
+<button class="size-8 rounded hover:bg-surface-border text-text-secondary hover:text-white flex items-center justify-center transition-colors" title="Share">
+<span class="material-symbols-outlined text-[20px]">share</span>
+</button>
+<button class="size-8 rounded hover:bg-surface-border text-text-secondary hover:text-white flex items-center justify-center transition-colors" title="Documentation">
+<span class="material-symbols-outlined text-[20px]">help</span>
+</button>
+</div>
+</div>
+<!-- Content Container -->
+<div class="px-6 pb-12 max-w-4xl mx-auto w-full flex flex-col gap-8">
+<!-- Title & Description -->
+<div>
+<h1 class="text-white text-4xl font-bold mb-3 tracking-tight">Newton's Second Law</h1>
+<p class="text-text-secondary text-lg leading-relaxed max-w-2xl">
+                        A fundamental principle of dynamics that states the rate of change of momentum of an object is directly proportional to the force applied, or simply, force equals mass times acceleration.
+                    </p>
+</div>
+<!-- Equation Display (Hero) -->
+<div class="w-full bg-surface-dark rounded-xl border border-surface-border p-8 md:p-12 flex flex-col items-center justify-center relative overflow-hidden group">
+<div class="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-50"></div>
+<!-- Background Pattern -->
+<div class="absolute inset-0 opacity-10" style="background-image: radial-gradient(#92adc9 1px, transparent 1px); background-size: 24px 24px;"></div>
+<div class="relative z-10 scale-125 md:scale-150 transform transition-transform duration-500 hover:scale-[1.6]">
+<span class="text-white font-serif italic text-4xl md:text-5xl font-medium tracking-wider">
+<span class="text-primary">F</span> = m · a
+                        </span>
+</div>
+<div class="absolute bottom-4 right-4 flex gap-2">
+<span class="px-2 py-1 rounded bg-background-dark/80 text-xs text-text-secondary border border-surface-border/50 backdrop-blur font-mono">SI Units</span>
+</div>
+</div>
+<!-- Calculator Section -->
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+<!-- Inputs -->
+<div class="lg:col-span-2 flex flex-col gap-5 bg-surface-dark/50 rounded-xl p-6 border border-surface-border/50">
+<h3 class="text-white text-sm font-bold uppercase tracking-wider flex items-center gap-2 mb-1">
+<span class="material-symbols-outlined text-primary text-[18px]">input</span> Variables
+                        </h3>
+<!-- Input Row 1 -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
+<div class="sm:col-span-6 flex flex-col gap-1.5">
+<label class="text-text-secondary text-sm font-medium flex justify-between">
+                                    Mass (m)
+                                    <span class="text-xs text-text-secondary/50 font-mono">Scalar</span>
+</label>
+<div class="flex rounded-lg bg-surface-border border border-transparent focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all overflow-hidden">
+<input class="w-full bg-transparent border-none text-white p-2.5 focus:ring-0 font-mono" placeholder="0.00" type="number" value="15.5"/>
+</div>
+</div>
+<div class="sm:col-span-4 flex flex-col gap-1.5">
+<label class="text-text-secondary text-xs font-medium invisible">Unit</label>
+<select class="w-full bg-surface-border border-transparent rounded-lg text-white p-2.5 text-sm focus:ring-0 focus:border-primary cursor-pointer">
+<option>Kilograms (kg)</option>
+<option>Grams (g)</option>
+<option>Pounds (lb)</option>
+</select>
+</div>
+<div class="sm:col-span-2 pb-2.5">
+<button class="text-text-secondary hover:text-white transition-colors" title="Info about Mass">
+<span class="material-symbols-outlined text-[18px]">info</span>
+</button>
+</div>
+</div>
+<!-- Input Row 2 -->
+<div class="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end">
+<div class="sm:col-span-6 flex flex-col gap-1.5">
+<label class="text-text-secondary text-sm font-medium flex justify-between">
+                                    Acceleration (a)
+                                    <span class="text-xs text-text-secondary/50 font-mono">Vector</span>
+</label>
+<div class="flex rounded-lg bg-surface-border border border-transparent focus-within:border-primary focus-within:ring-1 focus-within:ring-primary transition-all overflow-hidden">
+<input class="w-full bg-transparent border-none text-white p-2.5 focus:ring-0 font-mono" placeholder="0.00" type="number" value="9.81"/>
+</div>
+</div>
+<div class="sm:col-span-4 flex flex-col gap-1.5">
+<label class="text-text-secondary text-xs font-medium invisible">Unit</label>
+<select class="w-full bg-surface-border border-transparent rounded-lg text-white p-2.5 text-sm focus:ring-0 focus:border-primary cursor-pointer">
+<option>Meters/sec² (m/s²)</option>
+<option>Feet/sec² (ft/s²)</option>
+<option>Gee (g)</option>
+</select>
+</div>
+<div class="sm:col-span-2 pb-2.5">
+<button class="text-text-secondary hover:text-white transition-colors" title="Info about Acceleration">
+<span class="material-symbols-outlined text-[18px]">info</span>
+</button>
+</div>
+</div>
+<div class="mt-2 pt-4 border-t border-surface-border flex justify-end gap-3">
+<button class="px-4 py-2 rounded-lg text-text-secondary hover:text-white hover:bg-surface-border font-medium text-sm transition-colors">Clear</button>
+<button class="px-6 py-2 rounded-lg bg-primary hover:bg-primary-hover text-white font-bold text-sm shadow-lg shadow-primary/20 flex items-center gap-2 transition-all">
+<span class="material-symbols-outlined text-[18px]">calculate</span>
+                                Calculate
+                            </button>
+</div>
+</div>
+<!-- Result Panel -->
+<div class="lg:col-span-1 flex flex-col h-full">
+<div class="flex-1 bg-surface-border/30 rounded-xl p-6 border border-primary/20 flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-10">
+<span class="material-symbols-outlined text-6xl">equal</span>
+</div>
+<div>
+<h3 class="text-text-secondary text-xs font-bold uppercase tracking-wider mb-2">Result</h3>
+<div class="flex items-baseline gap-2 flex-wrap">
+<span class="text-4xl font-bold text-white font-mono tracking-tight">152.05</span>
+<span class="text-xl text-primary font-medium">N</span>
+</div>
+<p class="text-xs text-text-secondary mt-1">Newtons (Force)</p>
+</div>
+<div class="mt-8 flex flex-col gap-2">
+<button class="w-full py-2 px-3 rounded-lg bg-surface-border hover:bg-surface-border/80 text-white text-sm font-medium flex items-center justify-center gap-2 transition-colors border border-surface-border hover:border-text-secondary/30">
+<span class="material-symbols-outlined text-[16px]">content_copy</span>
+                                    Copy Result
+                                </button>
+<button class="w-full py-2 px-3 rounded-lg border border-surface-border text-text-secondary hover:text-white hover:bg-surface-border text-sm font-medium flex items-center justify-center gap-2 transition-colors">
+<span class="material-symbols-outlined text-[16px]">add_chart</span>
+                                    Plot Graph
+                                </button>
+</div>
+</div>
+</div>
+</div>
+<!-- Related/Notes Section -->
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-2">
+<div class="bg-surface-dark/30 rounded-lg p-5 border border-surface-border/50">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-text-secondary">sticky_note_2</span>
+<h3 class="text-white font-medium text-sm">Engineering Notes</h3>
+</div>
+<p class="text-sm text-text-secondary leading-relaxed">
+                            This formula assumes constant mass. For systems with varying mass (like rockets), the more general form F = dp/dt should be used.
+                        </p>
+</div>
+<div class="bg-surface-dark/30 rounded-lg p-5 border border-surface-border/50">
+<div class="flex items-center gap-2 mb-3">
+<span class="material-symbols-outlined text-text-secondary">link</span>
+<h3 class="text-white font-medium text-sm">Related Formulas</h3>
+</div>
+<div class="flex flex-wrap gap-2">
+<a class="px-3 py-1 rounded-full bg-surface-border text-xs text-text-secondary hover:text-white hover:bg-primary/20 hover:border-primary/30 border border-transparent transition-all" href="#">Weight (W = mg)</a>
+<a class="px-3 py-1 rounded-full bg-surface-border text-xs text-text-secondary hover:text-white hover:bg-primary/20 hover:border-primary/30 border border-transparent transition-all" href="#">Impulse (J = FΔt)</a>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
