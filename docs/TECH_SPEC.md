@@ -1,10 +1,11 @@
-# Engineering Calculator - Technical Specification
+# Scientific Calculator - Technical Specification
 
-> 공학용 계산기 웹 애플리케이션 기술 명세서
+> 과학 계산기 웹 애플리케이션 기술 명세서
 
-**버전**: 1.0.0  
+**버전**: 2.0.0  
 **작성일**: 2025-12-23  
-**프로젝트**: Engineering Calculator
+**프로젝트**: Scientific Calculator  
+**기반 문서**: [PRD v1.0.0](./PRD.md)
 
 ---
 
@@ -14,86 +15,81 @@
 2. [기술 스택](#기술-스택)
 3. [시스템 아키텍처](#시스템-아키텍처)
 4. [프로젝트 구조](#프로젝트-구조)
-5. [개발 환경 설정](#개발-환경-설정)
+5. [개발 환경](#개발-환경)
 6. [코어 로직 구현](#코어-로직-구현)
 7. [상태 관리](#상태-관리)
 8. [UI 컴포넌트](#ui-컴포넌트)
-9. [테스트 전략](#테스트-전략)
-10. [빌드 및 배포](#빌드-및-배포)
-11. [성능 최적화](#성능-최적화)
+9. [데이터 저장](#데이터-저장)
+10. [테스트 전략](#테스트-전략)
+11. [빌드 및 배포](#빌드-및-배포)
+12. [성능 최적화](#성능-최적화)
 
 ---
 
 ## 🎯 개요
 
-### 프로젝트 목표
+### 프로젝트 범위 (MVP)
 
-- **현대적인 웹 기술 스택** 활용
-- **TDD 및 SOLID 원칙** 기반 개발
-- **타입 안전성** 100% 보장
-- **90% 이상 테스트 커버리지** 달성
-- **Lighthouse 점수 90+** 달성
+**포함 기능**:
+- ✅ 과학 계산기 (기본 연산 + 과학 함수)
+- ✅ 계산 기록 (LocalStorage)
+- ✅ 설정 (테마, 햅틱, 정밀도)
 
-### 핵심 기능
+**제외 기능** (Phase 2):
+- ❌ 단위 변환기
+- ❌ 상수 라이브러리
+- ❌ 그래프 플로팅
 
-1. **과학 계산기**: 기본 연산, 삼각함수, 로그, 제곱근 등
-2. **단위 변환기**: 길이, 무게, 온도, 속도 등 다양한 단위 변환
-3. **계산 기록**: 이전 계산 내역 저장 및 재사용
-4. **상수 라이브러리**: 수학/물리 상수 빠른 입력
+### 기술적 목표
+
+1. **모바일 우선**: 최대 너비 448px, 터치 최적화
+2. **TDD 개발**: 코어 로직 90% 커버리지
+3. **타입 안전성**: TypeScript 100%
+4. **성능**: Lighthouse 90+, 로딩 < 2초
+5. **오프라인**: PWA 지원
 
 ---
 
 ## 🛠 기술 스택
 
-### Frontend Core
+### Core Technologies
 
 | 기술 | 버전 | 용도 | 선택 이유 |
 |------|------|------|-----------|
-| **React** | 19.2.3 | UI 라이브러리 | 최신 기능 (Compiler, Server Components 준비) |
-| **TypeScript** | 5.9.3 | 타입 시스템 | 타입 안전성, 개발 생산성 향상 |
+| **React** | 19.2.3 | UI 라이브러리 | 최신 기능, 성능 최적화 |
+| **TypeScript** | 5.9.3 | 타입 시스템 | 타입 안전성, 개발 생산성 |
 | **Vite** | 7.3.0 | 빌드 도구 | 빠른 HMR, 최적화된 번들링 |
 
 ### Styling & UI
 
 | 기술 | 버전 | 용도 |
 |------|------|------|
-| **Tailwind CSS** | 3.4+ | 유틸리티 CSS 프레임워크 |
-| **Framer Motion** | 11.0+ | 애니메이션 라이브러리 |
-| **Material Symbols** | Latest | 아이콘 시스템 |
+| **Tailwind CSS** | 3.4+ | 유틸리티 CSS |
 | **Space Grotesk** | Latest | 타이포그래피 |
+| **Material Symbols** | Latest | 아이콘 |
 
-### State Management & Data
+### State & Data
 
 | 기술 | 버전 | 용도 |
 |------|------|------|
 | **Zustand** | 4.5+ | 전역 상태 관리 |
-| **React Hook Form** | 7.50+ | 폼 상태 관리 |
 | **mathjs** | 12.4+ | 수학 연산 엔진 |
 
-### Development Tools
+### Development & Testing
 
 | 기술 | 버전 | 용도 |
 |------|------|------|
-| **ESLint** | 9.39.2 | 코드 린팅 |
+| **Vitest** | 1.2+ | 단위 테스트 |
+| **ESLint** | 9.39+ | 코드 린팅 |
 | **Prettier** | 3.2+ | 코드 포맷팅 |
-| **Husky** | 9.0+ | Git 훅 관리 |
-| **lint-staged** | 15.0+ | Pre-commit 검사 |
 
-### Testing
-
-| 기술 | 버전 | 용도 |
-|------|------|------|
-| **Vitest** | 1.2+ | 단위 테스트 프레임워크 |
-| **Testing Library** | 14.2+ | React 컴포넌트 테스트 (선택적) |
-| **@vitest/ui** | 1.2+ | 테스트 UI 대시보드 |
-
-### CI/CD & Deployment
+### Deployment
 
 | 기술 | 용도 |
 |------|------|
-| **GitHub Actions** | CI/CD 파이프라인 |
-| **GitHub Pages** | 정적 사이트 호스팅 |
-| **pnpm** | 패키지 관리자 |
+| **GitHub Actions** | CI/CD |
+| **GitHub Pages** | 호스팅 |
+| **pnpm** | 패키지 관리 |
 
 ---
 
@@ -103,37 +99,52 @@
 
 ```
 ┌─────────────────────────────────────┐
-│         Presentation Layer          │
-│    (React Components, Routing)      │
+│      Presentation Layer             │
+│   (Calculator UI, Settings)         │
 └─────────────────────────────────────┘
                   ↓
 ┌─────────────────────────────────────┐
-│        Business Logic Layer         │
-│  (Calculation Engine, Validators)   │
+│     Business Logic Layer            │
+│  (CalculationEngine, Formatter)     │
 └─────────────────────────────────────┘
                   ↓
 ┌─────────────────────────────────────┐
-│          Data Layer                 │
-│   (Zustand Stores, LocalStorage)    │
+│         Data Layer                  │
+│  (Zustand Store, LocalStorage)      │
 └─────────────────────────────────────┘
 ```
 
-### 컴포넌트 아키텍처
+### 컴포넌트 계층
 
 ```
 App
-├── Layout
+├── CalculatorPage (메인)
 │   ├── Header
-│   └── BottomNav (모바일)
-├── Pages
-│   ├── Calculator (과학 계산기)
-│   ├── UnitConverter (단위 변환기)
-│   ├── History (계산 기록)
-│   └── Constants (상수 목록)
-└── Shared Components
-    ├── Display (결과 표시)
-    ├── Keypad (숫자 패드)
-    └── Button (공통 버튼)
+│   │   ├── Title
+│   │   └── SettingsButton
+│   ├── Display
+│   │   ├── Expression
+│   │   └── Result
+│   └── Keypad
+│       ├── ScientificFunctions
+│       │   ├── sin, cos, tan, deg
+│       │   └── ln, log, √, x²
+│       └── NumberPad
+│           ├── AC, ←, %, ÷
+│           ├── 7, 8, 9, ×
+│           ├── 4, 5, 6, -
+│           ├── 1, 2, 3, +
+│           └── 0, ., =
+├── HistoryPage (기록)
+│   ├── Header
+│   ├── HistoryList
+│   │   └── HistoryItem[]
+│   └── ClearAllButton
+└── SettingsPage (설정)
+    ├── Header
+    ├── ThemeSelector
+    ├── PrecisionSlider
+    └── HapticToggle
 ```
 
 ---
@@ -141,113 +152,118 @@ App
 ## 📁 프로젝트 구조
 
 ```
-engineering-calculator/
+scientific-calculator/
 ├── .github/
 │   └── workflows/
-│       ├── deploy.yml          # 배포 워크플로우
-│       └── pr-check.yml        # PR 체크 워크플로우
+│       ├── deploy.yml              # 배포 워크플로우
+│       └── pr-check.yml            # PR 체크
 ├── docs/
-│   ├── PRD.md                  # 제품 요구사항
-│   ├── TECH_SPEC.md            # 기술 명세서 (이 문서)
-│   ├── TDD_RULES.md            # TDD 개발 규칙
-│   ├── SOLID_PRINCIPLES.md     # SOLID 원칙
-│   └── design/                 # 디자인 파일
+│   ├── PRD.md                      # 제품 요구사항
+│   ├── TECH_SPEC.md                # 기술 명세서 (이 문서)
+│   ├── TDD_RULES.md                # TDD 규칙
+│   └── SOLID_PRINCIPLES.md         # SOLID 원칙
 ├── public/
-│   └── vite.svg                # 파비콘
+│   ├── manifest.json               # PWA 매니페스트
+│   └── icons/                      # PWA 아이콘
 ├── src/
-│   ├── components/             # React 컴포넌트
-│   │   ├── layout/            # 레이아웃 컴포넌트
-│   │   │   ├── Header.tsx
-│   │   │   ├── BottomNav.tsx
-│   │   │   └── MainLayout.tsx
-│   │   ├── calculator/        # 계산기 컴포넌트
-│   │   │   ├── Display.tsx
-│   │   │   ├── Keypad.tsx
+│   ├── components/
+│   │   ├── calculator/
+│   │   │   ├── Display.tsx         # 결과 표시
 │   │   │   ├── ScientificFunctions.tsx
-│   │   │   └── Calculator.tsx
-│   │   ├── converter/         # 단위 변환기 컴포넌트
-│   │   │   ├── UnitSelector.tsx
-│   │   │   ├── ConversionInput.tsx
-│   │   │   └── UnitConverter.tsx
-│   │   ├── history/           # 기록 컴포넌트
+│   │   │   ├── NumberPad.tsx
+│   │   │   └── Calculator.tsx      # 메인 계산기
+│   │   ├── history/
 │   │   │   ├── HistoryItem.tsx
 │   │   │   └── HistoryList.tsx
-│   │   ├── constants/         # 상수 컴포넌트
-│   │   │   ├── ConstantCard.tsx
-│   │   │   └── ConstantList.tsx
-│   │   └── ui/                # 공통 UI 컴포넌트
-│   │       ├── Button.tsx
-│   │       ├── Input.tsx
+│   │   ├── settings/
+│   │   │   ├── ThemeSelector.tsx
+│   │   │   ├── PrecisionSlider.tsx
+│   │   │   └── HapticToggle.tsx
+│   │   ├── layout/
+│   │   │   ├── Header.tsx
+│   │   │   └── BottomNav.tsx
+│   │   └── ui/
+│   │       ├── Button.tsx          # 공통 버튼
 │   │       └── Card.tsx
-│   ├── pages/                 # 페이지 컴포넌트
-│   │   ├── CalculatorPage.tsx
-│   │   ├── ConverterPage.tsx
-│   │   ├── HistoryPage.tsx
-│   │   └── ConstantsPage.tsx
-│   ├── stores/                # Zustand 상태 관리
-│   │   ├── useCalculatorStore.ts
-│   │   ├── useConverterStore.ts
-│   │   ├── useHistoryStore.ts
-│   │   └── useSettingsStore.ts
-│   ├── utils/                 # 유틸리티 함수 (TDD)
-│   │   ├── calculations.ts
-│   │   ├── unitConversion.ts
-│   │   ├── formatters.ts
-│   │   └── validators.ts
-│   ├── hooks/                 # 커스텀 훅
-│   │   ├── useCalculator.ts
-│   │   ├── useConverter.ts
-│   │   └── useLocalStorage.ts
-│   ├── types/                 # TypeScript 타입
-│   │   ├── calculator.ts
-│   │   ├── converter.ts
-│   │   └── history.ts
-│   ├── constants/             # 상수 정의
-│   │   ├── mathConstants.ts
-│   │   ├── physicsConstants.ts
-│   │   └── units.ts
-│   ├── App.tsx                # 루트 컴포넌트
-│   ├── main.tsx               # 엔트리 포인트
-│   └── index.css              # 글로벌 스타일
-├── tests/                     # 테스트 파일
-│   ├── unit/                  # 단위 테스트
-│   │   ├── calculations.test.ts
-│   │   ├── unitConversion.test.ts
-│   │   └── validators.test.ts
-│   └── integration/           # 통합 테스트
-│       └── calculator.test.ts
-├── .eslintrc.cjs              # ESLint 설정
-├── .prettierrc                # Prettier 설정
-├── .gitignore                 # Git 무시 파일
-├── eslint.config.js           # ESLint 설정 (새 형식)
-├── index.html                 # HTML 템플릿
-├── package.json               # 패키지 정의
-├── pnpm-lock.yaml             # 의존성 잠금 파일
-├── tsconfig.json              # TypeScript 설정
-├── tsconfig.app.json          # 앱용 TS 설정
-├── tsconfig.node.json         # Node용 TS 설정
-├── vite.config.ts             # Vite 설정
-└── README.md                  # 프로젝트 README
+│   ├── pages/
+│   │   ├── CalculatorPage.tsx      # 메인 페이지
+│   │   ├── HistoryPage.tsx         # 기록 페이지
+│   │   └── SettingsPage.tsx        # 설정 페이지
+│   ├── stores/
+│   │   ├── useCalculatorStore.ts   # 계산기 상태
+│   │   ├── useHistoryStore.ts      # 기록 상태
+│   │   └── useSettingsStore.ts     # 설정 상태
+│   ├── utils/                      # 코어 로직 (TDD)
+│   │   ├── calculations.ts         # 계산 엔진
+│   │   ├── formatters.ts           # 포맷터
+│   │   ├── validators.ts           # 검증기
+│   │   └── haptics.ts              # 햅틱 피드백
+│   ├── hooks/
+│   │   ├── useCalculator.ts        # 계산기 훅
+│   │   ├── useHistory.ts           # 기록 훅
+│   │   └── useTheme.ts             # 테마 훅
+│   ├── types/
+│   │   ├── calculator.ts           # 계산기 타입
+│   │   └── history.ts              # 기록 타입
+│   ├── constants/
+│   │   └── config.ts               # 설정 상수
+│   ├── App.tsx
+│   ├── main.tsx
+│   └── index.css
+├── tests/
+│   └── unit/
+│       ├── calculations.test.ts
+│       ├── formatters.test.ts
+│       └── validators.test.ts
+├── package.json
+├── vite.config.ts
+├── tsconfig.json
+└── tailwind.config.js
 ```
 
 ---
 
-## ⚙️ 개발 환경 설정
+## ⚙️ 개발 환경
 
-### 1. Vite 설정 (`vite.config.ts`)
+### 1. Vite 설정
 
 ```typescript
+// vite.config.ts
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import { VitePWA } from 'vite-plugin-pwa'
 import path from 'path'
 
 export default defineConfig(({ mode }) => ({
-  plugins: [react()],
+  plugins: [
+    react(),
+    VitePWA({
+      registerType: 'autoUpdate',
+      manifest: {
+        name: 'Scientific Calculator',
+        short_name: 'Calculator',
+        description: 'Modern scientific calculator',
+        theme_color: '#135bec',
+        background_color: '#101622',
+        display: 'standalone',
+        icons: [
+          {
+            src: '/icon-192.png',
+            sizes: '192x192',
+            type: 'image/png'
+          },
+          {
+            src: '/icon-512.png',
+            sizes: '512x512',
+            type: 'image/png'
+          }
+        ]
+      }
+    })
+  ],
   
-  // GitHub Pages 배포를 위한 base 경로
   base: mode === 'production' ? '/engineering-calculator/' : '/',
   
-  // 절대 경로 alias
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
@@ -255,16 +271,13 @@ export default defineConfig(({ mode }) => ({
       '@utils': path.resolve(__dirname, './src/utils'),
       '@types': path.resolve(__dirname, './src/types'),
       '@stores': path.resolve(__dirname, './src/stores'),
-      '@hooks': path.resolve(__dirname, './src/hooks'),
     }
   },
   
-  // 빌드 설정
   build: {
     target: 'es2015',
     minify: 'esbuild',
     sourcemap: true,
-    outDir: 'dist',
     rollupOptions: {
       output: {
         manualChunks: {
@@ -273,48 +286,16 @@ export default defineConfig(({ mode }) => ({
         }
       }
     }
-  },
-  
-  // 개발 서버 설정
-  server: {
-    port: 5173,
-    open: true,
   }
 }))
 ```
 
-### 2. TypeScript 설정 (`tsconfig.json`)
-
-```json
-{
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ],
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@components/*": ["./src/components/*"],
-      "@utils/*": ["./src/utils/*"],
-      "@types/*": ["./src/types/*"],
-      "@stores/*": ["./src/stores/*"],
-      "@hooks/*": ["./src/hooks/*"]
-    }
-  }
-}
-```
-
-### 3. Tailwind CSS 설정 (`tailwind.config.js`)
+### 2. Tailwind 설정
 
 ```javascript
-/** @type {import('tailwindcss').Config} */
+// tailwind.config.js
 export default {
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
   darkMode: 'class',
   theme: {
     extend: {
@@ -328,49 +309,13 @@ export default {
       fontFamily: {
         display: ['Space Grotesk', 'sans-serif'],
       },
+      maxWidth: {
+        'calculator': '448px', // 모바일 최적화
+      },
     },
   },
-  plugins: [
-    require('@tailwindcss/forms'),
-  ],
+  plugins: [],
 }
-```
-
-### 4. Vitest 설정 (`vitest.config.ts`)
-
-```typescript
-import { defineConfig } from 'vitest/config'
-import react from '@vitejs/plugin-react'
-import path from 'path'
-
-export default defineConfig({
-  plugins: [react()],
-  test: {
-    globals: true,
-    environment: 'jsdom',
-    setupFiles: './src/setupTests.ts',
-    coverage: {
-      provider: 'v8',
-      reporter: ['text', 'json', 'html'],
-      exclude: [
-        'node_modules/',
-        'src/setupTests.ts',
-        '**/*.d.ts',
-        '**/*.config.*',
-        '**/mockData',
-        'src/main.tsx',
-      ],
-    },
-  },
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, './src'),
-      '@components': path.resolve(__dirname, './src/components'),
-      '@utils': path.resolve(__dirname, './src/utils'),
-      '@types': path.resolve(__dirname, './src/types'),
-    }
-  },
-})
 ```
 
 ---
@@ -378,8 +323,6 @@ export default defineConfig({
 ## 🧮 코어 로직 구현
 
 ### 1. 계산 엔진 (`utils/calculations.ts`)
-
-**책임**: 수학 연산 수행
 
 ```typescript
 import { evaluate } from 'mathjs'
@@ -392,9 +335,7 @@ export interface CalculationResult {
 
 export class CalculationEngine {
   /**
-   * 수식을 평가하여 결과 반환
-   * @param expression 수학 표현식
-   * @returns 계산 결과
+   * 표현식 계산
    */
   static calculate(expression: string): CalculationResult {
     try {
@@ -407,32 +348,52 @@ export class CalculationEngine {
       return {
         value: 0,
         expression,
-        error: error instanceof Error ? error.message : 'Calculation error',
+        error: this.getErrorMessage(error),
       }
     }
   }
 
   /**
-   * 삼각함수 계산 (각도 모드)
+   * 삼각함수 (각도 모드 지원)
    */
   static sin(angle: number, isDegree: boolean = true): number {
-    const radians = isDegree ? (angle * Math.PI) / 180 : angle
+    const radians = isDegree ? this.degToRad(angle) : angle
     return Math.sin(radians)
   }
 
   static cos(angle: number, isDegree: boolean = true): number {
-    const radians = isDegree ? (angle * Math.PI) / 180 : angle
+    const radians = isDegree ? this.degToRad(angle) : angle
     return Math.cos(radians)
   }
 
   static tan(angle: number, isDegree: boolean = true): number {
-    const radians = isDegree ? (angle * Math.PI) / 180 : angle
+    const radians = isDegree ? this.degToRad(angle) : angle
     return Math.tan(radians)
+  }
+
+  /**
+   * 각도 변환
+   */
+  private static degToRad(degrees: number): number {
+    return (degrees * Math.PI) / 180
+  }
+
+  /**
+   * 에러 메시지 생성
+   */
+  private static getErrorMessage(error: unknown): string {
+    if (error instanceof Error) {
+      if (error.message.includes('division by zero')) {
+        return 'Error: Division by zero'
+      }
+      return 'Error: Invalid expression'
+    }
+    return 'Error: Unknown error'
   }
 }
 ```
 
-**테스트 예시** (`tests/unit/calculations.test.ts`):
+**테스트** (`tests/unit/calculations.test.ts`):
 
 ```typescript
 import { describe, it, expect } from 'vitest'
@@ -441,14 +402,20 @@ import { CalculationEngine } from '@utils/calculations'
 describe('CalculationEngine', () => {
   describe('calculate', () => {
     it('should calculate basic arithmetic', () => {
-      const result = CalculationEngine.calculate('2 + 2')
-      expect(result.value).toBe(4)
-      expect(result.error).toBeUndefined()
+      expect(CalculationEngine.calculate('2 + 2').value).toBe(4)
+      expect(CalculationEngine.calculate('10 - 3').value).toBe(7)
+      expect(CalculationEngine.calculate('4 * 5').value).toBe(20)
+      expect(CalculationEngine.calculate('15 / 3').value).toBe(5)
     })
 
     it('should handle complex expressions', () => {
-      const result = CalculationEngine.calculate('sin(30) + 5')
-      expect(result.value).toBeCloseTo(5.5, 1)
+      const result = CalculationEngine.calculate('(2 + 3) * 4')
+      expect(result.value).toBe(20)
+    })
+
+    it('should return error for division by zero', () => {
+      const result = CalculationEngine.calculate('1 / 0')
+      expect(result.error).toContain('Division by zero')
     })
 
     it('should return error for invalid expression', () => {
@@ -460,102 +427,45 @@ describe('CalculationEngine', () => {
   describe('trigonometric functions', () => {
     it('should calculate sin in degrees', () => {
       expect(CalculationEngine.sin(30, true)).toBeCloseTo(0.5, 5)
+      expect(CalculationEngine.sin(90, true)).toBeCloseTo(1, 5)
     })
 
-    it('should calculate cos in radians', () => {
-      expect(CalculationEngine.cos(Math.PI, false)).toBeCloseTo(-1, 5)
+    it('should calculate cos in degrees', () => {
+      expect(CalculationEngine.cos(0, true)).toBeCloseTo(1, 5)
+      expect(CalculationEngine.cos(60, true)).toBeCloseTo(0.5, 5)
+    })
+
+    it('should calculate tan in degrees', () => {
+      expect(CalculationEngine.tan(45, true)).toBeCloseTo(1, 5)
+    })
+
+    it('should calculate in radians', () => {
+      expect(CalculationEngine.sin(Math.PI / 2, false)).toBeCloseTo(1, 5)
     })
   })
 })
 ```
 
-### 2. 단위 변환 (`utils/unitConversion.ts`)
-
-**책임**: 다양한 단위 간 변환
-
-```typescript
-export type UnitCategory = 'length' | 'mass' | 'temperature' | 'speed'
-
-export interface UnitDefinition {
-  symbol: string
-  name: string
-  category: UnitCategory
-  toBase: (value: number) => number
-  fromBase: (value: number) => number
-}
-
-export class UnitConverter {
-  private static units: Map<string, UnitDefinition> = new Map()
-
-  static registerUnit(unit: UnitDefinition): void {
-    this.units.set(unit.symbol, unit)
-  }
-
-  static convert(value: number, from: string, to: string): number {
-    const fromUnit = this.units.get(from)
-    const toUnit = this.units.get(to)
-
-    if (!fromUnit || !toUnit) {
-      throw new Error(`Unknown unit: ${from} or ${to}`)
-    }
-
-    if (fromUnit.category !== toUnit.category) {
-      throw new Error(`Cannot convert between different categories`)
-    }
-
-    // Convert to base unit, then to target unit
-    const baseValue = fromUnit.toBase(value)
-    return toUnit.fromBase(baseValue)
-  }
-}
-
-// 길이 단위 등록
-UnitConverter.registerUnit({
-  symbol: 'm',
-  name: 'Meter',
-  category: 'length',
-  toBase: (v) => v,
-  fromBase: (v) => v,
-})
-
-UnitConverter.registerUnit({
-  symbol: 'km',
-  name: 'Kilometer',
-  category: 'length',
-  toBase: (v) => v * 1000,
-  fromBase: (v) => v / 1000,
-})
-
-UnitConverter.registerUnit({
-  symbol: 'cm',
-  name: 'Centimeter',
-  category: 'length',
-  toBase: (v) => v / 100,
-  fromBase: (v) => v * 100,
-})
-```
-
-### 3. 포맷터 (`utils/formatters.ts`)
-
-**책임**: 숫자 및 결과 포맷팅
+### 2. 포맷터 (`utils/formatters.ts`)
 
 ```typescript
 export class Formatter {
   /**
-   * 숫자를 읽기 쉬운 형식으로 포맷
+   * 숫자 포맷팅
    */
   static formatNumber(value: number, precision: number = 10): string {
-    // 매우 큰 숫자는 과학적 표기법 사용
+    // 매우 큰/작은 숫자는 과학적 표기법
     if (Math.abs(value) >= 1e10 || (Math.abs(value) < 1e-10 && value !== 0)) {
       return value.toExponential(precision)
     }
 
-    // 일반 숫자는 소수점 자리 제한
-    return parseFloat(value.toPrecision(precision)).toString()
+    // 일반 숫자
+    const formatted = parseFloat(value.toPrecision(precision))
+    return formatted.toString()
   }
 
   /**
-   * 표현식을 보기 좋게 포맷
+   * 표현식 포맷팅 (보기 좋게)
    */
   static formatExpression(expression: string): string {
     return expression
@@ -563,39 +473,48 @@ export class Formatter {
       .replace(/\//g, '÷')
       .replace(/sqrt/g, '√')
   }
+
+  /**
+   * 기록 항목 포맷팅
+   */
+  static formatHistoryItem(expression: string, result: number): string {
+    return `${this.formatExpression(expression)} = ${this.formatNumber(result)}`
+  }
 }
 ```
 
-### 4. 검증기 (`utils/validators.ts`)
-
-**책임**: 입력 값 검증
+### 3. 햅틱 피드백 (`utils/haptics.ts`)
 
 ```typescript
-export class Validator {
+export class Haptics {
   /**
-   * 숫자 입력 검증
+   * 햅틱 피드백 실행
    */
-  static isValidNumber(value: string): boolean {
-    return !isNaN(parseFloat(value)) && isFinite(parseFloat(value))
-  }
-
-  /**
-   * 표현식 검증
-   */
-  static isValidExpression(expression: string): boolean {
-    try {
-      evaluate(expression)
-      return true
-    } catch {
-      return false
+  static vibrate(duration: number = 10): void {
+    if ('vibrate' in navigator) {
+      navigator.vibrate(duration)
     }
   }
 
   /**
-   * 범위 검증
+   * 버튼 탭 피드백
    */
-  static isInRange(value: number, min: number, max: number): boolean {
-    return value >= min && value <= max
+  static buttonTap(): void {
+    this.vibrate(10)
+  }
+
+  /**
+   * 에러 피드백
+   */
+  static error(): void {
+    this.vibrate([10, 50, 10])
+  }
+
+  /**
+   * 성공 피드백
+   */
+  static success(): void {
+    this.vibrate(20)
   }
 }
 ```
@@ -604,20 +523,21 @@ export class Validator {
 
 ## 🗄️ 상태 관리
 
-### Zustand Store 구조
-
-#### 1. Calculator Store (`stores/useCalculatorStore.ts`)
+### Calculator Store
 
 ```typescript
+// stores/useCalculatorStore.ts
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
+import { CalculationEngine } from '@utils/calculations'
+import { Formatter } from '@utils/formatters'
 
 interface CalculatorState {
   // State
   display: string
   expression: string
-  history: string[]
   isDegree: boolean
+  lastResult: number | null
   
   // Actions
   appendToExpression: (value: string) => void
@@ -625,7 +545,15 @@ interface CalculatorState {
   clear: () => void
   backspace: () => void
   toggleAngleMode: () => void
-  addToHistory: (expression: string, result: string) => void
+  
+  // Scientific functions
+  applySin: () => void
+  applyCos: () => void
+  applyTan: () => void
+  applyLn: () => void
+  applyLog: () => void
+  applySqrt: () => void
+  applySquare: () => void
 }
 
 export const useCalculatorStore = create<CalculatorState>()(
@@ -633,53 +561,167 @@ export const useCalculatorStore = create<CalculatorState>()(
     (set, get) => ({
       display: '0',
       expression: '',
-      history: [],
       isDegree: true,
+      lastResult: null,
 
-      appendToExpression: (value) => set((state) => ({
-        expression: state.expression + value,
-        display: state.expression + value,
-      })),
+      appendToExpression: (value) => set((state) => {
+        const newExpression = state.expression + value
+        return {
+          expression: newExpression,
+          display: newExpression || '0',
+        }
+      }),
 
       calculate: () => {
         const { expression } = get()
+        if (!expression) return
+
         const result = CalculationEngine.calculate(expression)
         
-        if (!result.error) {
+        if (result.error) {
+          set({ display: result.error })
+        } else {
+          const formatted = Formatter.formatNumber(result.value)
           set({
-            display: Formatter.formatNumber(result.value),
+            display: formatted,
             expression: '',
+            lastResult: result.value,
           })
-          get().addToHistory(expression, result.value.toString())
+          
+          // 기록에 추가
+          useHistoryStore.getState().addToHistory(expression, result.value)
         }
       },
 
-      clear: () => set({ display: '0', expression: '' }),
+      clear: () => set({
+        display: '0',
+        expression: '',
+        lastResult: null,
+      }),
 
-      backspace: () => set((state) => ({
-        expression: state.expression.slice(0, -1),
-        display: state.expression.slice(0, -1) || '0',
-      })),
+      backspace: () => set((state) => {
+        const newExpression = state.expression.slice(0, -1)
+        return {
+          expression: newExpression,
+          display: newExpression || '0',
+        }
+      }),
 
       toggleAngleMode: () => set((state) => ({
         isDegree: !state.isDegree,
       })),
 
-      addToHistory: (expression, result) => set((state) => ({
-        history: [`${expression} = ${result}`, ...state.history].slice(0, 50),
-      })),
+      applySin: () => {
+        const { expression, isDegree } = get()
+        const newExpr = `sin(${expression || '0'})`
+        set({ expression: newExpr, display: newExpr })
+      },
+
+      applyCos: () => {
+        const { expression } = get()
+        const newExpr = `cos(${expression || '0'})`
+        set({ expression: newExpr, display: newExpr })
+      },
+
+      applyTan: () => {
+        const { expression } = get()
+        const newExpr = `tan(${expression || '0'})`
+        set({ expression: newExpr, display: newExpr })
+      },
+
+      applyLn: () => {
+        const { expression } = get()
+        const newExpr = `log(${expression || '0'})`
+        set({ expression: newExpr, display: newExpr })
+      },
+
+      applyLog: () => {
+        const { expression } = get()
+        const newExpr = `log10(${expression || '0'})`
+        set({ expression: newExpr, display: newExpr })
+      },
+
+      applySqrt: () => {
+        const { expression } = get()
+        const newExpr = `sqrt(${expression || '0'})`
+        set({ expression: newExpr, display: newExpr })
+      },
+
+      applySquare: () => {
+        const { expression } = get()
+        const newExpr = `(${expression || '0'})^2`
+        set({ expression: newExpr, display: newExpr })
+      },
     }),
     {
       name: 'calculator-storage',
-      partialize: (state) => ({ history: state.history, isDegree: state.isDegree }),
+      partialize: (state) => ({ isDegree: state.isDegree }),
     }
   )
 )
 ```
 
-#### 2. Settings Store (`stores/useSettingsStore.ts`)
+### History Store
 
 ```typescript
+// stores/useHistoryStore.ts
+import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
+import { Formatter } from '@utils/formatters'
+
+interface HistoryItem {
+  id: string
+  expression: string
+  result: number
+  timestamp: number
+}
+
+interface HistoryState {
+  items: HistoryItem[]
+  addToHistory: (expression: string, result: number) => void
+  removeItem: (id: string) => void
+  clearAll: () => void
+  loadExpression: (expression: string) => void
+}
+
+export const useHistoryStore = create<HistoryState>()(
+  persist(
+    (set) => ({
+      items: [],
+
+      addToHistory: (expression, result) => set((state) => ({
+        items: [
+          {
+            id: Date.now().toString(),
+            expression,
+            result,
+            timestamp: Date.now(),
+          },
+          ...state.items,
+        ].slice(0, 50), // 최대 50개
+      })),
+
+      removeItem: (id) => set((state) => ({
+        items: state.items.filter((item) => item.id !== id),
+      })),
+
+      clearAll: () => set({ items: [] }),
+
+      loadExpression: (expression) => {
+        useCalculatorStore.getState().appendToExpression(expression)
+      },
+    }),
+    {
+      name: 'history-storage',
+    }
+  )
+)
+```
+
+### Settings Store
+
+```typescript
+// stores/useSettingsStore.ts
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
@@ -696,7 +738,7 @@ interface SettingsState {
 export const useSettingsStore = create<SettingsState>()(
   persist(
     (set) => ({
-      theme: 'system',
+      theme: 'dark',
       precision: 10,
       hapticFeedback: true,
 
@@ -717,60 +759,65 @@ export const useSettingsStore = create<SettingsState>()(
 
 ## 🎨 UI 컴포넌트
 
-### 디자인 시스템
-
-#### 색상 팔레트
+### Button 컴포넌트
 
 ```typescript
-// tailwind.config.js
-colors: {
-  primary: '#135bec',
-  'background-light': '#f6f6f8',
-  'background-dark': '#101622',
-  'surface-dark': '#1e2433',
-  'surface-light': '#ffffff',
-}
-```
-
-#### 타이포그래피
-
-- **폰트**: Space Grotesk
-- **크기**:
-  - Display (결과): 56px
-  - Expression: 20px
-  - Button: 24px
-
-#### 컴포넌트 예시
-
-**Button 컴포넌트** (`components/ui/Button.tsx`):
-
-```typescript
+// components/ui/Button.tsx
 import { ButtonHTMLAttributes, ReactNode } from 'react'
 import { clsx } from 'clsx'
+import { Haptics } from '@utils/haptics'
+import { useSettingsStore } from '@stores/useSettingsStore'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'number' | 'operator' | 'function' | 'action'
+  variant?: 'number' | 'operator' | 'function' | 'action' | 'equals'
   children: ReactNode
 }
 
-export function Button({ variant = 'number', children, className, ...props }: ButtonProps) {
+export function Button({ 
+  variant = 'number', 
+  children, 
+  className, 
+  onClick,
+  ...props 
+}: ButtonProps) {
+  const hapticFeedback = useSettingsStore((state) => state.hapticFeedback)
+
+  const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (hapticFeedback) {
+      Haptics.buttonTap()
+    }
+    onClick?.(e)
+  }
+
   return (
     <button
       className={clsx(
         'flex items-center justify-center rounded-2xl h-16 font-bold transition-all',
         'hover:brightness-110 active:scale-95',
         {
+          // 숫자 버튼
           'bg-white dark:bg-[#1a1f29] text-neutral-900 dark:text-white text-2xl shadow-sm': 
             variant === 'number',
+          
+          // 연산자 버튼
           'bg-primary/10 dark:bg-primary/20 text-primary text-2xl': 
             variant === 'operator',
+          
+          // 과학 함수 버튼
           'bg-neutral-100 dark:bg-[#282e39] text-neutral-700 dark:text-white text-sm': 
             variant === 'function',
+          
+          // 액션 버튼 (AC, ←, %)
           'bg-neutral-200 dark:bg-[#343b48] text-primary text-xl': 
             variant === 'action',
+          
+          // = 버튼
+          'bg-primary text-white text-3xl shadow-lg shadow-primary/30 col-span-2': 
+            variant === 'equals',
         },
         className
       )}
+      onClick={handleClick}
       {...props}
     >
       {children}
@@ -781,40 +828,73 @@ export function Button({ variant = 'number', children, className, ...props }: Bu
 
 ---
 
+## 💾 데이터 저장
+
+### LocalStorage 구조
+
+```typescript
+// LocalStorage Keys
+{
+  "calculator-storage": {
+    "state": {
+      "isDegree": true
+    },
+    "version": 0
+  },
+  
+  "history-storage": {
+    "state": {
+      "items": [
+        {
+          "id": "1703318400000",
+          "expression": "sin(30) + 5",
+          "result": 5.5,
+          "timestamp": 1703318400000
+        }
+      ]
+    },
+    "version": 0
+  },
+  
+  "settings-storage": {
+    "state": {
+      "theme": "dark",
+      "precision": 10,
+      "hapticFeedback": true
+    },
+    "version": 0
+  }
+}
+```
+
+---
+
 ## 🧪 테스트 전략
-
-### 테스트 피라미드
-
-```
-        /\
-       /E2\      E2E Tests (수동)
-      /____\     - 전체 사용자 플로우
-     /      \
-    / Integ \   Integration Tests (선택적)
-   /__________\  - 컴포넌트 통합
-  /            \
- /    Unit      \ Unit Tests (TDD)
-/________________\ - 코어 로직 90%+ 커버리지
-```
 
 ### 테스트 범위
 
-#### ✅ 자동화 테스트 (TDD)
+#### ✅ 자동화 테스트 (TDD - 90% 커버리지)
 
-- **코어 로직**: 90% 이상 커버리지
-  - `calculations.ts`
-  - `unitConversion.ts`
-  - `formatters.ts`
-  - `validators.ts`
-- **상태 관리**: 비즈니스 로직만
-  - Store actions
-  - State transitions
+**코어 로직**:
+- `calculations.ts` - 계산 엔진
+- `formatters.ts` - 포맷터
+- `validators.ts` - 검증기
+- `haptics.ts` - 햅틱 피드백
+
+**상태 관리**:
+- Store actions (비즈니스 로직만)
 
 #### 🖱️ 수동 테스트
 
-- **UI 컴포넌트**: 브라우저에서 수동 확인
-- **사용자 플로우**: E2E 시나리오
-- **반응형 디자인**: 다양한 화면 크기
+**UI 컴포넌트**:
+- 버튼 인터랙션
+- 애니메이션
+- 반응형 레이아웃
+
+**E2E 시나리오**:
+- 계산 플로우
+- 기록 저장/불러오기
+- 설정 변경
 
 ### package.json Scripts
 
@@ -828,7 +908,7 @@ export function Button({ variant = 'number', children, className, ...props }: Bu
     "test:run": "vitest run",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
-    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "lint": "eslint .",
     "type-check": "tsc --noEmit"
   }
 }
@@ -838,143 +918,62 @@ export function Button({ variant = 'number', children, className, ...props }: Bu
 
 ## 🚀 빌드 및 배포
 
-### CI/CD 파이프라인
+### GitHub Actions Workflow
 
-#### Deploy Workflow (`.github/workflows/deploy.yml`)
-
-```yaml
-name: Deploy to GitHub Pages
-
-on:
-  push:
-    branches: [main]
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'pnpm'
-      - run: pnpm install --no-frozen-lockfile
-      - run: pnpm lint || echo "Lint not configured yet"
-      - run: pnpm type-check || echo "Type check not configured yet"
-      - run: pnpm test:run || echo "Tests not configured yet"
-      - run: pnpm build
-      - uses: actions/configure-pages@v4
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: './dist'
-  
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - uses: actions/deploy-pages@v4
-        id: deployment
-```
+이미 설정된 `.github/workflows/deploy.yml` 사용:
+- Lint → Type Check → Test → Build → Deploy
 
 ### 배포 URL
 
-- **Production**: https://hennessynlove7552.github.io/engineering-calculator/
-- **Preview**: `pnpm preview` (로컬)
+```
+https://hennessynlove7552.github.io/engineering-calculator/
+```
 
 ---
 
 ## ⚡ 성능 최적화
 
-### 1. 코드 스플리팅
-
-```typescript
-// App.tsx
-import { lazy, Suspense } from 'react'
-
-const CalculatorPage = lazy(() => import('./pages/CalculatorPage'))
-const ConverterPage = lazy(() => import('./pages/ConverterPage'))
-const HistoryPage = lazy(() => import('./pages/HistoryPage'))
-
-function App() {
-  return (
-    <Suspense fallback={<Loading />}>
-      <Routes>
-        <Route path="/" element={<CalculatorPage />} />
-        <Route path="/converter" element={<ConverterPage />} />
-        <Route path="/history" element={<HistoryPage />} />
-      </Routes>
-    </Suspense>
-  )
-}
-```
-
-### 2. 번들 최적화
+### 1. 번들 최적화
 
 ```typescript
 // vite.config.ts
-build: {
-  rollupOptions: {
-    output: {
-      manualChunks: {
-        'react-vendor': ['react', 'react-dom'],
-        'math-vendor': ['mathjs'],
-        'state-vendor': ['zustand'],
-      }
+rollupOptions: {
+  output: {
+    manualChunks: {
+      'react-vendor': ['react', 'react-dom'],
+      'math-vendor': ['mathjs'],
     }
   }
 }
 ```
 
-### 3. 메모이제이션
+### 2. 메모이제이션
 
 ```typescript
-// 비용이 큰 계산 캐싱
+// 계산 결과 캐싱
 const result = useMemo(() => {
   return CalculationEngine.calculate(expression)
 }, [expression])
+```
 
-// 콜백 메모이제이션
-const handleCalculate = useCallback(() => {
-  calculate()
-}, [calculate])
+### 3. PWA 캐싱
+
+```typescript
+// Service Worker로 오프라인 지원
+// vite-plugin-pwa가 자동 생성
 ```
 
 ### 성능 목표
 
-| 지표 | 목표 | 측정 방법 |
-|------|------|-----------|
-| Initial Load | < 2s | Lighthouse |
-| Time to Interactive | < 3s | Lighthouse |
-| Bundle Size | < 500KB | `pnpm build` |
-| Lighthouse Score | > 90 | Chrome DevTools |
+| 지표 | 목표 |
+|------|------|
+| Initial Load | < 2s |
+| Time to Interactive | < 3s |
+| Bundle Size | < 300KB |
+| Lighthouse Score | > 90 |
 
 ---
 
-## 📚 참고 자료
-
-- [React 19 Documentation](https://react.dev/)
-- [Vite Documentation](https://vitejs.dev/)
-- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Zustand Documentation](https://github.com/pmndrs/zustand)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [Vitest Documentation](https://vitest.dev/)
-- [mathjs Documentation](https://mathjs.org/)
-
----
-
-**문서 버전**: 1.0.0  
+**문서 버전**: 2.0.0  
 **최종 수정일**: 2025-12-23  
-**작성자**: Engineering Calculator Team
+**작성자**: Scientific Calculator Team
