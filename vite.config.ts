@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => ({
   },
   build: {
     target: 'es2015',
-    minify: 'terser',
+    minify: 'esbuild',
     sourcemap: true,
     outDir: 'dist'
   }
